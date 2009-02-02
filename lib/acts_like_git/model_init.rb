@@ -1,6 +1,7 @@
 module ActsLikeGit
   class ModelInit
-    attr_accessor :versioned_fields, :versioned_fields_values, :repository, :table_name, :commit_message
+    attr_accessor :versioned_fields, :versioned_fields_values, :repository
+    attr_accessor :table_name, :commit_message, :committer
     
     # TODO: document this
     #
@@ -22,6 +23,7 @@ module ActsLikeGit
       @versioned_fields_values = {}
       @versioned_fields = builder.versioned_fields
       @commit_message = builder.commit_message
+      @committer = builder.committer
       @repository = builder.repository
     end
     

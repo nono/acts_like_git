@@ -19,7 +19,7 @@ module ActsLikeGit
     # 
     class Builder
       class << self      
-        attr_accessor :repository, :versioned_fields, :commit_message
+        attr_accessor :repository, :versioned_fields, :commit_message, :committer
         
         # Set up all the collections. Consider this the equivalent of an
         # instance's initialize method.
@@ -35,6 +35,13 @@ module ActsLikeGit
         #  version.message = lambda { |u| "Committed by #{u.login}" }
         def message=(message)
           @commit_message = message
+        end
+                
+        # You can set a custom committer.  Pass a string or a lambda.
+        # 
+        #  version.committer = lambda { |u| [u.login, u.email] }
+        def committer=(committer)
+          @committer = committer
         end
                 
         # acts_like_git needs a repository to save the versions 

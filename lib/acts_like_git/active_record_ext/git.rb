@@ -66,7 +66,6 @@ module ActsLikeGit
       def init_structure
         @model_folder = self.class.to_s.tableize
         @model_id = self.id.to_s
-        @model_user = Grit::Actor.new("ActsAsGit", 'aag@email.com')
       end
       
       def add_all_changes_to_git
@@ -92,7 +91,6 @@ module ActsLikeGit
       # returns new commit sha
       def commit_all(index, last_commit, last_tree)
         callback = self.git_settings.commit_message
-        # $stderr.puts self.git_settings.inspect
         message = case callback
         when Symbol
           self.send(callback)
@@ -101,8 +99,20 @@ module ActsLikeGit
         else
           "new version of #{self.class}, id: #{self.id.to_s}" 
         end
+
+        callback = self.git_settings.committer
+        committer = case callback
+        when Symbol
+          self.send(callback)
+        when Proc
+          callback.call(self)
+        else
+          ["ActsAsGit", 'aag@email.com']
+        end
+        committer = Grit::Actor.new(*committer)
+
         lc = (last_commit ? [last_commit.id] : nil)
-        index.commit(message, lc, @model_user)
+        index.commit(message, lc, committer)
       end
       
       def field_path(field)
