@@ -11,6 +11,10 @@ module ActsLikeGit
       def versions
         self.git.commits
       end
+
+      def version(hash)
+        self.git.commit(hash)
+      end
       
       # Revert the database version to the git commit version
       def revert_to(version_hash)
