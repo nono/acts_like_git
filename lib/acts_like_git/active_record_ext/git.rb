@@ -42,7 +42,7 @@ module ActsLikeGit
         end
         
         last_commit = self.git.log.first
-        (last_commit.tree/model_folder/model_id/"#{column}.txt").data
+        (last_commit.tree/model_folder/model_id/column).data
       rescue Object => e
         ''
       end
@@ -116,7 +116,7 @@ module ActsLikeGit
       end
       
       def field_path(field)
-        File.join(@model_folder, @model_id, "#{field}.txt")
+        File.join(@model_folder, @model_id, field)
       end
     end
   end

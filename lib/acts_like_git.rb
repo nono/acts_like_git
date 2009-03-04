@@ -25,8 +25,8 @@ module ActsLikeGit
     # Check if versioning is disabled.
     # 
     def versioning_enabled?
-      @@versioning_enabled =  true unless defined?(@@versioning_enabled)
-      @@versioning_enabled == true
+      @@versioning_enabled = true unless defined?(@@versioning_enabled)
+      @@versioning_enabled
     end
     
     # Enable/disable versioning - you may want to do this while migrating data.
